@@ -1,0 +1,69 @@
+name: build
+
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+jobs:
+  createNpmPackage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: yarn add shelljs 
+      - run: yarn run create:npm-package
+      - name: Upload template
+        uses: actions/upload-artifact@v1
+        with:
+          name: cra-template-rb
+          path: .cra-template-rb
+  
+  createAndTestCRA:
+    needs: createNpmPackage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Download template
+        uses: actions/download-artifact@v1
+        with:
+          name: cra-template-rb
+          path: ../cra-template-rb # Put into the upper folder. create-react-app wants the current directory empty
+      - name: Create CRA from downloaded template
+        run: yarn create react-app --template file:../cra-template-rb .
+      - run: yarn run build
+      - run: yarn run test:generators
+      - run: yarn run lint
+      - run: yarn run checkTs
+      - run: yarn run test
+      - run: yarn run cleanAndSetup
+      - run: yarn run build
+      - run: yarn run test:generators
+      - run: yarn run lint
+      - run: yarn run checkTs
+  createCRAWithMultipleNodeVersions:
+    needs: createNpmPackage
+    strategy:
+      matrix:
+        node-version: [14.x, 18.x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Download template
+        uses: actions/download-artifact@v1
+        with:
+          name: cra-template-rb
+          path: ../cra-template-rb # Put into the upper folder. create-react-app wants the current directory empty
+      - name: Create CRA from downloaded template
+        run: yarn create react-app --template file:../cra-template-rb .
+      - run: yarn run build
+      - run: yarn run test

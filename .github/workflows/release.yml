@@ -1,0 +1,31 @@
+name: release
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  createAndTestCRAFromNpm:
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Create CRA from npm template
+        run: yarn create react-app --template cra-template-rb .
+      - run: yarn run build
+      - run: yarn run test:generators
+      - run: yarn run lint
+      - run: yarn run checkTs
+      - run: yarn run cleanAndSetup
+      - run: yarn run build
+      - run: yarn run test:generators
+      - run: yarn run lint
+      - run: yarn run checkTs
