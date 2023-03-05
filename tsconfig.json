@@ -15,9 +15,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "jsx": "react-jsx"
   },
+  "exclude": ["node_modules/nostr-tools/*"],
   "include": ["src"],
   "ts-node": {
     "compilerOptions": {

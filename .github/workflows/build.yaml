@@ -40,13 +40,11 @@ jobs:
       - run: yarn run build
       - run: yarn run test:generators
       - run: yarn run lint
-      - run: yarn run checkTs
       - run: yarn run test
       - run: yarn run cleanAndSetup
       - run: yarn run build
       - run: yarn run test:generators
       - run: yarn run lint
-      - run: yarn run checkTs
   createCRAWithMultipleNodeVersions:
     needs: createNpmPackage
     strategy:

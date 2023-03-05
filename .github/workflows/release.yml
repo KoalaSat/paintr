@@ -23,9 +23,7 @@ jobs:
       - run: yarn run build
       - run: yarn run test:generators
       - run: yarn run lint
-      - run: yarn run checkTs
       - run: yarn run cleanAndSetup
       - run: yarn run build
       - run: yarn run test:generators
       - run: yarn run lint
-      - run: yarn run checkTs

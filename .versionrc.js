@@ -1,4 +1,4 @@
-const internalSection = `Internals`;
+const internalSection = `Internals`
 /*
  * Used for creating CHANGELOG.md automatically.
  * Anything under the internalSection should be boilerplate internals
@@ -32,4 +32,4 @@ module.exports = {
     changelog: true,
   },
   commitAll: true,
-};
+}

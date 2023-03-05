@@ -2,9 +2,9 @@
  * Asynchronously loads the component for NotFoundPage
  */
 
-import { lazyLoad } from 'utils/loadable';
+import { lazyLoad } from 'utils/lazyLoad'
 
 export const NotFoundPage = lazyLoad(
-  () => import('./index'),
-  module => module.NotFoundPage,
-);
+  async () => await import('./index'),
+  (module) => module.NotFoundPage,
+)

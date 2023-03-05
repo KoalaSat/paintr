@@ -1,14 +1,19 @@
-import * as React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Col, Row } from 'antd'
+import CanvasLayerOne from 'app/components/CanvasLayerOne'
+import CanvasLayerTwo from 'app/components/CanvasLayerTwo'
+import { Commands } from 'app/components/Commands'
+import * as React from 'react'
 
-export function HomePage() {
+export const HomePage: () => JSX.Element = () => {
   return (
-    <>
-      <Helmet>
-        <title>HomePage</title>
-        <meta name="description" content="A Boilerplate application homepage" />
-      </Helmet>
-      <span>My HomePage</span>
-    </>
-  );
+    <Row>
+      <Col>
+        <div style={{ position: 'relative', height: 340, width: 340 }}>
+          <CanvasLayerTwo />
+          <CanvasLayerOne />
+        </div>
+      </Col>
+      <Commands />
+    </Row>
+  )
 }
