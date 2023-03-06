@@ -16,10 +16,10 @@ jobs:
       - name: Download template
         uses: actions/download-artifact@v1
         with:
-          name: cra-template-rb
-          path: ../cra-template-rb # Put into the upper folder. create-react-app wants the current directory empty
+          name: paintr
+          path: ../paintr # Put into the upper folder. create-react-app wants the current directory empty
       - name: Create CRA from downloaded template
-        run: yarn create react-app --template file:../cra-template-rb .
+        run: yarn create react-app --template file:../paintr .
       - run: yarn run build
       - run: yarn run test:generators
       - run: yarn run lint
