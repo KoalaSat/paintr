@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 ---
 
-Before opening a new issue, please take a moment to review our [**community guidelines**](https://github.com/react-boilerplate/react-boilerplate-cra-template/blob/master/CONTRIBUTING.md) to make the contribution process easy and effective for everyone involved.
+Before opening a new issue, please take a moment to review our [**community guidelines**](https://github.com/KoalaSat/paintr/blob/main/CONTRIBUTING.md) to make the contribution process easy and effective for everyone involved.
 
 ## Description
 
@@ -11,9 +11,7 @@ A clear and concise description of what the bug is.
 
 ## Steps to reproduce
 
-Steps to reproduce the behavior:
-
-(Add link to a demo on https://jsfiddle.net or similar if possible)
+Steps to reproduce the behavior.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

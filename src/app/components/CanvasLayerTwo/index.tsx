@@ -1,53 +1,37 @@
 import { Pixel, PixelBoardContext } from 'app/contexts/pixelBoardContext'
 import { useContext, useEffect } from 'react'
 
-const PIXEL_SIZE = 10
-
 const CanvasLayerTwo: React.FC = () => {
-  const { pixels, canvasMainRef } = useContext(PixelBoardContext)
-  const placePixel = (pixel): void => {
-    const context = canvasMainRef.current.getContext('2d')
-    const pixelX = Math.floor(pixel.x / PIXEL_SIZE) * PIXEL_SIZE
-    const pixelY = Math.floor(pixel.y / PIXEL_SIZE) * PIXEL_SIZE
+  const { pixels, lastPixel, canvasTwoRef, height, width, pixelSize } =
+    useContext(PixelBoardContext)
+  const placePixel = (pixel: Pixel): void => {
+    if (!pixel) return
+
+    const context = canvasTwoRef.current.getContext('2d')
+    const pixelX = Math.floor(pixel.x / pixelSize) * pixelSize
+    const pixelY = Math.floor(pixel.y / pixelSize) * pixelSize
     context.fillStyle = pixel.color
-    context.fillRect(pixelX, pixelY, PIXEL_SIZE, PIXEL_SIZE)
+    context.fillRect(pixelX, pixelY, pixelSize, pixelSize)
   }
 
   useEffect(() => {
-    const context = canvasMainRef.current.getContext('2d')
+    const context = canvasTwoRef.current.getContext('2d')
     context.fillStyle = '#ffffff'
-    context.fillRect(0, 0, 340, 340)
-
-    // if (canvasLayerTwoRef) {
-    //     canvasLayerTwoRef.current = canvasMainRef.current;
-    // }
+    context.fillRect(0, 0, width, height)
   }, [])
 
   useEffect(() => {
-    let allPixels: Pixel[] = []
-    for (let i = 0; i < pixels.length; i++) {
-      const pixel = pixels[i]
+    Object.values(pixels).forEach(placePixel)
+  }, [pixels, lastPixel])
 
-      if (!pixel) continue
-
-      allPixels.push(pixel)
-    }
-
-    allPixels = allPixels.filter((pixel) => !pixel)
-    allPixels.sort((a, b) => {
-      if (a.created_at === null || b.created_at === null) {
-        return -1
-      }
-
-      return a.created_at - b.created_at
-    })
-
-    for (let i = 0; i < allPixels.length; i++) {
-      placePixel(allPixels[i])
-    }
-  }, [pixels])
-
-  return <canvas ref={canvasMainRef} height='340' width='340'></canvas>
+  return (
+    <canvas
+      ref={canvasTwoRef}
+      height={height}
+      width={width}
+      style={{ position: 'absolute' }}
+    ></canvas>
+  )
 }
 
 export default CanvasLayerTwo
