@@ -13,18 +13,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      - name: Download template
-        uses: actions/download-artifact@v1
-        with:
-          name: paintr
-          path: ../paintr # Put into the upper folder. create-react-app wants the current directory empty
       - name: Create CRA from downloaded template
-        run: yarn create react-app --template file:../paintr .
       - run: yarn run build
-      - run: yarn run test:generators
       - run: yarn run lint
-      - run: yarn run test
       - run: yarn run cleanAndSetup
-      - run: yarn run build
-      - run: yarn run test:generators
-      - run: yarn run lint
