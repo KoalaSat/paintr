@@ -1,4 +1,4 @@
-FROM node:14.17.1 as build
+FROM node:14.18.0 as build
  
 SHELL ["/bin/bash", "-c"]
 
