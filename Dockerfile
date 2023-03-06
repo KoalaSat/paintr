@@ -1,4 +1,4 @@
-FROM node:14.18.0 as build
+FROM node:18.10.0 as build
  
 SHELL ["/bin/bash", "-c"]
 
@@ -9,7 +9,6 @@ COPY . /app
 WORKDIR /app
 
 RUN yarn install 
-RUN export NODE_OPTIONS=--max-old-space-size=5120
 RUN yarn build
 
 FROM nginx:stable-alpine
