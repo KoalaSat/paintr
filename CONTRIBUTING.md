@@ -23,7 +23,7 @@ Guidelines for bug reports:
 
 1.  **Use the GitHub issue search** &mdash; check if the issue has already been reported.
 
-2.  **Check if the issue has been fixed** &mdash; try to reproduce it using the latest `master` or development branch in the repository.
+2.  **Check if the issue has been fixed** &mdash; try to reproduce it using the latest `main` or development branch in the repository.
 
 3.  **Isolate the problem** &mdash; ideally create a [reduced test case](https://css-tricks.com/reduced-test-cases/) and a live example.
 
@@ -89,9 +89,9 @@ project's developers might not want to merge into the project.
 Please adhere to the coding conventions used throughout a project (indentation,
 accurate comments, etc.) and any other requirements (such as test coverage).
 
-Since the `master` branch is what people actually use in production, we have a
+Since the `main` branch is what people actually use in production, we have a
 `dev` branch that unstable changes get merged into first. Only when we
-consider that stable we merge it into the `master` branch and release the
+consider that stable we merge it into the `main` branch and release the
 changes for real.
 
 ## Commit Messages
@@ -113,7 +113,7 @@ Those commits will be used to generate [CHANGELOG.md](./CHANGELOG.md) automatica
 > More info: [standard-version](https://github.com/conventional-changelog/standard-version)
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project
-owners to license your work under the terms of the [MIT License](https://github.com/react-boilerplate/react-boilerplate/blob/master/LICENSE.md).
+owners to license your work under the terms of the [MIT License](https://github.com/KoalaSat/paintr/blob/main/LICENSE).
 
 # Collaborating guidelines
 
