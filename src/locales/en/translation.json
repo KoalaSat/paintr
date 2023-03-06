@@ -1,3 +1,20 @@
 {
-  "title": "welcome"
+  "commands": {
+    "place": "Place"
+  },
+  "relays": {
+    "button": "Relays",
+    "addRelay": "Add relay",
+    "title": "Relays",
+    "reload": "Reload canvas"
+  },
+  "pixelData": {
+    "zap": "Zap",
+    "genreateInvoice": "Generate invoice",
+    "copyInvoice": "Copy"
+  },
+  "login": {
+    "secretKey": "Secret key",
+    "invalidNsec": "Invalid secret key"
+  }
 }

@@ -7,6 +7,7 @@
 
 import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
+import { Buffer as SafeBuffer } from 'safe-buffer'
 
 import * as React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -23,6 +24,9 @@ import reportWebVitals from 'reportWebVitals'
 
 // Initialize languages
 import './locales/i18n'
+
+// @ts-expect-error
+global.Buffer = SafeBuffer
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 

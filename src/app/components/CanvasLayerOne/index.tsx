@@ -1,47 +1,55 @@
 import { PixelBoardContext } from 'app/contexts/pixelBoardContext'
-import React, { useContext, useEffect, useMemo, useRef } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 
-const PIXEL_SIZE = 10
+const DARK_COLORS = [256, 513, 422]
 
 const CanvasLayerOne: React.FC = () => {
-  const { selectedPixel, setSelectedPixel, canvasMainRef } = useContext(PixelBoardContext)
-  const canvasOneRef = useRef<any>()
+  const {
+    selectedPixel,
+    setSelectedPixel,
+    pixels,
+    canvasOneRef,
+    canvasTwoRef,
+    height,
+    width,
+    pixelSize,
+  } = useContext(PixelBoardContext)
 
   const selectPixelIcon = useMemo(() => {
-    const selectPixelIcon = new Image(10, 10)
+    const selectPixelIcon = new Image(pixelSize, pixelSize)
     selectPixelIcon.src = '/select-icon.png'
     return selectPixelIcon
   }, [])
 
   const selectPixelIconWhite = useMemo(() => {
-    const selectPixelIcon = new Image(10, 10)
+    const selectPixelIcon = new Image(pixelSize, pixelSize)
     selectPixelIcon.src = '/select-icon-white.png'
     return selectPixelIcon
   }, [])
 
   useEffect(() => {
-    const canvas = canvasMainRef.current
+    const canvas = canvasOneRef.current
 
     if (!canvas) return
 
     const context = canvas.getContext('2d')
 
-    const selectPixelIcon = new Image(10, 10)
-    selectPixelIcon.src = '/select-icon.png'
-
-    const selectPixelIconWhite = new Image(10, 10)
-    selectPixelIconWhite.src = '/select-icon-white.png'
     const handleCanvasClick = (event): void => {
       context.clearRect(0, 0, canvas.width, canvas.height)
 
-      const pixelX = Math.floor(event.offsetX / PIXEL_SIZE) * PIXEL_SIZE
-      const pixelY = Math.floor(event.offsetY / PIXEL_SIZE) * PIXEL_SIZE
+      const pixelX = Math.floor(event.offsetX / pixelSize) * pixelSize
+      const pixelY = Math.floor(event.offsetY / pixelSize) * pixelSize
 
-      setSelectedPixel({
-        x: pixelX,
-        y: pixelY,
-        created_at: 0,
-      })
+      setSelectedPixel(
+        pixels[`${pixelX}${pixelY}`] ?? {
+          id: '',
+          x: pixelX,
+          y: pixelY,
+          created_at: 0,
+          color: '',
+          author: '',
+        },
+      )
     }
 
     canvas.addEventListener('click', handleCanvasClick)
@@ -53,21 +61,16 @@ const CanvasLayerOne: React.FC = () => {
 
   useEffect(() => {
     if (selectedPixel) {
-      const canvas = canvasMainRef.current
+      const canvas = canvasOneRef.current
 
       if (!canvas) return
 
       const context = canvas.getContext('2d')
 
-      const canvasMainRefContext = canvasOneRef.current.getContext('2d')
-      const pixelData = canvasMainRefContext.getImageData(
-        selectedPixel.x,
-        selectedPixel.y,
-        1,
-        1,
-      ).data
-      const isPixelBlack = pixelData[0] + pixelData[1] + pixelData[2] + pixelData[3] === 357
-      if (isPixelBlack) {
+      const canvasTwoContext = canvasTwoRef.current.getContext('2d')
+      const pixelData = canvasTwoContext.getImageData(selectedPixel.x, selectedPixel.y, 1, 1).data
+      const colorCode: number = pixelData[0] + pixelData[1] + pixelData[2] + pixelData[3]
+      if (DARK_COLORS.includes(colorCode)) {
         context.drawImage(selectPixelIconWhite, selectedPixel.x, selectedPixel.y)
       } else {
         context.drawImage(selectPixelIcon, selectedPixel.x, selectedPixel.y)
@@ -75,7 +78,14 @@ const CanvasLayerOne: React.FC = () => {
     }
   }, [selectedPixel])
 
-  return <canvas ref={canvasOneRef} height='340' width='340' style={{ top: 340 }}></canvas>
+  return (
+    <canvas
+      ref={canvasOneRef}
+      height={height}
+      width={width}
+      style={{ position: 'absolute' }}
+    ></canvas>
+  )
 }
 
 export default CanvasLayerOne

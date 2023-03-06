@@ -1,8 +1,20 @@
-import i18next from 'i18next'
+import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 import en from './en/translation.json'
+
+/* eslint-disable import/no-duplicates */
+import setDefaultOptions from 'date-fns/setDefaultOptions'
+import { enUS as dateEnUS, es as dateEs } from 'date-fns/locale'
+/* eslint-enable import/no-duplicates */
+
+const dateLocales: Record<string, Locale> = {
+  es: dateEs,
+  en: dateEnUS,
+}
+const deviceLocale: string = 'en'
+setDefaultOptions({ locale: dateLocales[deviceLocale] })
 
 export const translationsJson = {
   en: {
@@ -10,7 +22,7 @@ export const translationsJson = {
   },
 }
 
-export const i18n = i18next
+i18n
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
   // detect user language
@@ -27,3 +39,5 @@ export const i18n = i18next
       escapeValue: false, // not needed for react as it escapes by default
     },
   })
+
+export default i18n

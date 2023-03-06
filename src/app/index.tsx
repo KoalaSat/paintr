@@ -14,12 +14,12 @@ import { GlobalStyle } from 'styles/global-styles'
 
 import { HomePage } from './pages/HomePage/Loadable'
 import { NotFoundPage } from './components/NotFoundPage/Loadable'
-import { useTranslation } from 'react-i18next'
+import { I18nextProvider } from 'react-i18next'
 import RelayPoolProvider from './contexts/relayPoolContext'
 import PixelBoardProvider from './contexts/pixelBoardContext'
+import i18n from 'locales/i18n'
 
 export const App: () => JSX.Element = () => {
-  const { i18n } = useTranslation()
   return (
     <RelayPoolProvider>
       <PixelBoardProvider>
@@ -31,11 +31,12 @@ export const App: () => JSX.Element = () => {
           >
             <meta name='description' content='A React Boilerplate application' />
           </Helmet>
-
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='*' element={<NotFoundPage />} />
-          </Routes>
+          <I18nextProvider i18n={i18n}>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='*' element={<NotFoundPage />} />
+            </Routes>
+          </I18nextProvider>
           <GlobalStyle />
         </BrowserRouter>
       </PixelBoardProvider>
