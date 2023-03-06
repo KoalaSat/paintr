@@ -14,7 +14,7 @@ RUN yarn build
 
 FROM nginx:stable-alpine
 
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 
 EXPOSE 80
 EXPOSE 443
