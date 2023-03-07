@@ -1,4 +1,4 @@
-# Contributing to React Boilerplate CRA Template
+# Contributing to Paintr
 
 Love react-boilerplate-cra-template and want to help? Thanks so much, there's something to do for everybody!
 
