@@ -44,7 +44,7 @@ export const Login: () => JSX.Element = () => {
       cancelText={t('login.cancelText')}
       okText={t('login.okText')}
       maskClosable={false}
-      width='60%'
+      width='80%'
     >
       <Row gutter={[16, 16]}>
         <Col span={24}>
@@ -61,6 +61,7 @@ export const Login: () => JSX.Element = () => {
             <Typography.Text strong>{t('login.faqRelaysDescription3')}</Typography.Text>
           </Modal>
           <Card title={t('login.title1')} bordered={false}>
+            <Typography.Text underline>{t('login.warning')}</Typography.Text>
             <Title level={4}>{t('login.title2')}</Title>
             <p>{t('login.description')}</p>
             <Typography.Link onClick={() => setIsModalRelaysOpen(true)}>

@@ -130,13 +130,15 @@ export const PixelData: () => JSX.Element = () => {
                 )}
               </Col>
               <Col span={6}>
-                <Button
-                  type='primary'
-                  onClick={handleZap}
-                  disabled={!privateKey || !zapLud || zapLud === ''}
-                >
-                  {t('pixelData.zap')}
-                </Button>
+                <Row justify='end'>
+                  <Button
+                    type='primary'
+                    onClick={handleZap}
+                    disabled={!privateKey || !zapLud || zapLud === ''}
+                  >
+                    {t('pixelData.zap')}
+                  </Button>
+                </Row>
               </Col>
             </Row>
           </>

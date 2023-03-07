@@ -67,14 +67,21 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    const relays: string[] = []
-    while (relays.length < 5) {
-      const randomRelayIndex = randomInt(0, fallbackRelays.length - 1)
-      if (!relays.includes(fallbackRelays[randomRelayIndex])) {
-        relays.push(fallbackRelays[randomRelayIndex])
+    const localRelaysJson = localStorage.getItem('relays')
+    if (localRelaysJson && localRelaysJson !== '') {
+      const localRelays = JSON.parse(localRelaysJson)
+      setRelayUrls(localRelays)
+    } else {
+      const relays: string[] = []
+      while (relays.length < 5) {
+        const randomRelayIndex = randomInt(0, fallbackRelays.length - 1)
+        if (!relays.includes(fallbackRelays[randomRelayIndex])) {
+          relays.push(fallbackRelays[randomRelayIndex])
+        }
       }
+      localStorage.setItem('relays', JSON.stringify(relays))
+      setRelayUrls(relays)
     }
-    setRelayUrls(relays)
   }, [])
 
   useEffect(() => mainSubscription(relayUrls), [privateKey, publicKey])
