@@ -4,14 +4,14 @@
   "version": "1.2.6",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-boilerplate/react-boilerplate-cra-template.git"
+    "url": "https://github.com/KoalaSat/paintr.git"
   },
   "license": "MIT",
   "engines": {
     "node": ">=14.x"
   },
   "bugs": {
-    "url": "https://github.com/react-boilerplate/react-boilerplate-cra-template/issues"
+    "url": "https://github.com/KoalaSat/paintr/issues"
   },
   "main": "template.json",
   "files": [
@@ -20,11 +20,9 @@
   ],
   "keywords": [
     "react",
-    "create-react-app",
-    "template",
     "typescript",
-    "react-boilerplate",
-    "styled-components"
+    "nostr",
+    "desentralized"
   ],
   "scripts": {
     "// ---DEFAULT CRA---": "",

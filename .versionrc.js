@@ -1,9 +1,4 @@
 const internalSection = `Internals`
-/*
- * Used for creating CHANGELOG.md automatically.
- * Anything under the internalSection should be boilerplate internals
- * and shouldn't interest the end users, meaning that the template shouldn't be effected.
- */
 
 // Check the descriptions of the types -> https://github.com/commitizen/conventional-commit-types/blob/master/index.json
 module.exports = {

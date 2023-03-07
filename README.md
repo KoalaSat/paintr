@@ -1,8 +1,8 @@
 # Paintr
 
 <div align="center">
-  <a href="https://github.com/react-boilerplate/react-boilerplate-cra-template/actions?query=workflow%3Abuild">
-    <img src="https://github.com/react-boilerplate/react-boilerplate-cra-template/workflows/build/badge.svg" alt="Build Status" />
+  <a href="https://github.com/KoalaSat/paintr/actions?query=workflow%3Abuild">
+    <img src="https://github.com/KoalaSat/paintr/workflows/build/badge.svg" alt="Build Status" />
   </a>
 </div>
 
