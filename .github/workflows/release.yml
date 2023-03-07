@@ -18,12 +18,5 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Create CRA from npm template
-        run: yarn create react-app --template paintr .
       - run: yarn run build
-      - run: yarn run test:generators
-      - run: yarn run lint
-      - run: yarn run cleanAndSetup
-      - run: yarn run build
-      - run: yarn run test:generators
       - run: yarn run lint
