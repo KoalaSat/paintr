@@ -10,7 +10,6 @@ export const MainDrawer: () => JSX.Element = () => {
       open={true}
       mask={false}
       height={window.innerWidth > 770 ? 135 : 235}
-      width={window.innerWidth}
     >
       <Row gutter={[16, 16]}>
         <Col sm={24} md={16}>

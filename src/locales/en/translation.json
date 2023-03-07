@@ -14,7 +14,19 @@
     "copyInvoice": "Copy"
   },
   "login": {
+    "login": "Login",
     "secretKey": "Secret key",
-    "invalidNsec": "Invalid secret key"
+    "invalidNsec": "Invalid secret key",
+    "title1": "Welcome to Paintr",
+    "title2": "A pixel whiteboard over nostr.",
+    "description": "Use your nostr account to choose a pixel on the whiteboard and give it a color, you can place a new pixel every 60 seconds.",
+    "footer": "Made with 🐨 by ",
+    "cancelText": "Watch-only mode",
+    "okText": "Login",
+    "faqRelays": "Why the content changes from a relay to another?",
+    "faqRelaysTitle": "About concensous",
+    "faqRelaysDescription1": "Because Nostr doesn't rely on a small number of trusted servers for moving or storing data, it's very resilient.",
+    "faqRelaysDescription2": "The counter part is that this information is not stored under an universal consensous. This implies that despite the source of the data is verificable, different relays might contain different chunks of data.",
+    "faqRelaysDescription3": "With this app you'll be able to visualize this phenomenon by swapping between connected relays."
   }
 }

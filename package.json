@@ -40,7 +40,7 @@
     "generate": "plop --plopfile internals/generators/plopfile.ts",
     "prettify": "prettier --write",
     "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
-    "format": "eslint --fix '**/**/*.{js,ts,tsx}' && prettier --write '**/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "eslint --fix '**/**/*.{ts,tsx}' && prettier --write '**/**/*.{ts,tsx,css,md,json}' --config ./.prettierrc",
     "// ---BUILDING TEMPLATE---": "",
     "create:npm-package": "ts-node ./internals/scripts/create-npm-package.script.ts",
     "create:cra-app": "ts-node ./internals/scripts/create-cra-app.script.ts",

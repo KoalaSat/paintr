@@ -24,10 +24,10 @@ export const PixelData: () => JSX.Element = () => {
 
   React.useEffect(() => {
     setMeta(null)
+    setUsername(null)
+    setPicture(null)
+    setZapLud(null)
     if (selectedPixel) {
-      setUsername(null)
-      setPicture(null)
-      setZapLud(null)
       setNpub(nip19.npubEncode(selectedPixel.author))
       if (metadata[selectedPixel.author]) {
         setMeta(metadata[selectedPixel.author])
