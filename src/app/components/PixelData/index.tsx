@@ -25,6 +25,9 @@ export const PixelData: () => JSX.Element = () => {
   React.useEffect(() => {
     setMeta(null)
     if (selectedPixel) {
+      setUsername(null)
+      setPicture(null)
+      setZapLud(null)
       setNpub(nip19.npubEncode(selectedPixel.author))
       if (metadata[selectedPixel.author]) {
         setMeta(metadata[selectedPixel.author])
@@ -50,11 +53,6 @@ export const PixelData: () => JSX.Element = () => {
       setUsername(content.name)
       setPicture(content.picture)
       setZapLud(content.lud06 && content.lud06 !== '' ? content.lud06 : content.lud16)
-    } else {
-      setUsername(null)
-      setPicture(null)
-      setZapLud(null)
-      setNpub(null)
     }
   }, [meta])
 
