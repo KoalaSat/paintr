@@ -1,4 +1,4 @@
-FROM node:18.10.0 as build
+FROM nginx:stable-alpine
  
 SHELL ["/bin/bash", "-c"]
 
@@ -8,12 +8,7 @@ RUN apt update && apt install -y \
 COPY . /app
 WORKDIR /app
 
-RUN yarn install 
-RUN yarn build
-
-FROM nginx:stable-alpine
-
-COPY --from=build /app/build /usr/share/nginx/html
+COPY /app/build /usr/share/nginx/html
 
 EXPOSE 80
 EXPOSE 443
