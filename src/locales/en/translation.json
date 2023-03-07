@@ -6,7 +6,7 @@
     "button": "Relays",
     "addRelay": "Add relay",
     "title": "Relays",
-    "reload": "Reload canvas"
+    "reload": "Connect and reload canvas"
   },
   "pixelData": {
     "zap": "Zap",

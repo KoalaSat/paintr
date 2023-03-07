@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Event, Filter, getEventHash, signEvent, SimplePool, Sub } from 'nostr-tools'
 import { getUnixTime } from 'date-fns'
+import { fallbackRelays } from 'app/contants'
+import { randomInt } from 'app/Functions/Math'
 
 export interface RelayPoolContextType {
   relayUrls: string[]
@@ -44,7 +46,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
   const [publicKey, setPublicKey] = useState<string>(intialRelayPoolContext.publicKey)
   const [privateKey, setPrivateKey] = useState<string>()
   const [metadata, setMetadata] = useState<Record<string, Event>>({})
-  const [relayUrls, setRelayUrls] = useState<string[]>(['wss://nostr.island.network'])
+  const [relayUrls, setRelayUrls] = useState<string[]>([])
   const [subscription, setSubscription] = useState<Sub | null>(null)
   const relayPool = useMemo(() => {
     return new SimplePool()
@@ -55,7 +57,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
       const sub = relayPool.sub(relays, [
         {
           kinds: [30078],
-          '#a': ['paintr'],
+          '#a': ['paintr.click'],
         },
       ])
       sub.on('event', (event) => {})
@@ -63,6 +65,17 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const relays: string[] = []
+    while (relays.length < 5) {
+      const randomRelayIndex = randomInt(0, fallbackRelays.length - 1)
+      if (!relays.includes(fallbackRelays[randomRelayIndex])) {
+        relays.push(fallbackRelays[randomRelayIndex])
+      }
+    }
+    setRelayUrls(relays)
+  }, [])
 
   useEffect(() => mainSubscription(relayUrls), [privateKey, publicKey])
 
@@ -91,7 +104,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
       kind: 30078,
       pubkey: publicKey,
       created_at: getUnixTime(new Date()),
-      tags: [['a', 'paintr']],
+      tags: [['a', 'paintr.click']],
       content: content ?? '',
       id: '',
       sig: '',
