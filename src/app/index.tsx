@@ -25,11 +25,11 @@ export const App: () => JSX.Element = () => {
       <PixelBoardProvider>
         <BrowserRouter>
           <Helmet
-            titleTemplate='%s - React Boilerplate'
-            defaultTitle='React Boilerplate'
+            titleTemplate='%s - Paintr'
+            defaultTitle='Paintr'
             htmlAttributes={{ lang: i18n.language }}
           >
-            <meta name='description' content='A React Boilerplate application' />
+            <meta name='description' content='Paintr' />
           </Helmet>
           <I18nextProvider i18n={i18n}>
             <Routes>

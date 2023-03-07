@@ -43,7 +43,7 @@ export const Relays: () => JSX.Element = () => {
       >
         <Steps
           progressDot
-          current={1}
+          current={relayUrls.length - 1}
           direction='vertical'
           items={[...relayUrls, ...newRelays].map((relay) => {
             return {

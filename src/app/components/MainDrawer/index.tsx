@@ -10,13 +10,12 @@ export const MainDrawer: () => JSX.Element = () => {
       open={true}
       mask={false}
       height={window.innerWidth > 770 ? 135 : 235}
-      width={window.innerWidth}
     >
       <Row gutter={[16, 16]}>
-        <Col sm={24} md={16}>
+        <Col sm={24} md={16} style={{ width: '100%' }}>
           <Commands />
         </Col>
-        <Col sm={24} md={8}>
+        <Col sm={24} md={8} style={{ width: '100%' }}>
           <PixelData />
         </Col>
       </Row>

@@ -1,8 +1,7 @@
 /**
  * index.tsx
  *
- * This is the entry file for the application, only setup and boilerplate
- * code.
+ * This is the entry file for the application.
  */
 
 import 'react-app-polyfill/ie11'

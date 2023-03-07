@@ -13,11 +13,11 @@ export const HomePage: () => JSX.Element = () => {
     <Row>
       {publicKey ? (
         <>
-          <Col>
+          <MainDrawer />
+          <Col style={{ marginTop: window.innerWidth > 770 ? 135 : 235 }}>
             <CanvasLayerTwo />
             <CanvasLayerOne />
           </Col>
-          <MainDrawer />
         </>
       ) : (
         <Login />

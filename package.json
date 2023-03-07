@@ -1,17 +1,17 @@
 {
   "name": "paintr",
-  "description": "The official React Boilerplate template for Create React App",
+  "description": "Paintr",
   "version": "1.2.6",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-boilerplate/react-boilerplate-cra-template.git"
+    "url": "https://github.com/KoalaSat/paintr.git"
   },
   "license": "MIT",
   "engines": {
     "node": ">=14.x"
   },
   "bugs": {
-    "url": "https://github.com/react-boilerplate/react-boilerplate-cra-template/issues"
+    "url": "https://github.com/KoalaSat/paintr/issues"
   },
   "main": "template.json",
   "files": [
@@ -20,11 +20,9 @@
   ],
   "keywords": [
     "react",
-    "create-react-app",
-    "template",
     "typescript",
-    "react-boilerplate",
-    "styled-components"
+    "nostr",
+    "desentralized"
   ],
   "scripts": {
     "// ---DEFAULT CRA---": "",
@@ -40,7 +38,7 @@
     "generate": "plop --plopfile internals/generators/plopfile.ts",
     "prettify": "prettier --write",
     "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
-    "format": "eslint --fix '**/**/*.{js,ts,tsx}' && prettier --write '**/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "eslint --fix '**/**/*.{ts,tsx}' && prettier --write '**/**/*.{ts,tsx,css,md,json}' --config ./.prettierrc",
     "// ---BUILDING TEMPLATE---": "",
     "create:npm-package": "ts-node ./internals/scripts/create-npm-package.script.ts",
     "create:cra-app": "ts-node ./internals/scripts/create-cra-app.script.ts",
