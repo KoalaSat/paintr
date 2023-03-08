@@ -31,7 +31,7 @@ export const Commands: () => JSX.Element = () => {
 
   const pointSvg: () => JSX.Element = () => (
     <svg width='1.5em' height='1.5em' fill='currentColor' viewBox='0 0 2048 2048'>
-      <circle cx='1024' cy='800' r='700' stroke='black' strokeWidth='15' />
+      <circle cx='1024' cy='1200' r='700' stroke='black' strokeWidth='15' />
     </svg>
   )
 

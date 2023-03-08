@@ -1,4 +1,4 @@
-import { Button, Input, Modal, Steps } from 'antd'
+import { Button, Input, List, Modal, Row, Col } from 'antd'
 import { RelayPoolContext } from 'app/contexts/relayPoolContext'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +8,11 @@ export const Relays: () => JSX.Element = () => {
   const { relayUrls, addRelays } = React.useContext(RelayPoolContext)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
   const [inputRelay, setInputRelay] = React.useState<string>('')
-  const [newRelays, setNewRelays] = React.useState<string[]>([])
+  const [newRelays, setNewRelays] = React.useState<string[]>(relayUrls)
+
+  React.useEffect(() => {
+    if (openModal) setNewRelays(relayUrls)
+  }, [openModal])
 
   const handleOk: () => void = () => {
     addRelays(newRelays)
@@ -21,12 +25,16 @@ export const Relays: () => JSX.Element = () => {
     setOpenModal(false)
   }
 
-  const handleaddRelay: () => void = () => {
+  const handleAddRelay: () => void = () => {
     setNewRelays((prev) => {
       prev.push(inputRelay)
       return prev
     })
     setInputRelay('')
+  }
+
+  const handleDeleteRelay: (url: string) => void = (url) => {
+    setNewRelays((prev) => prev.filter((item) => item !== url))
   }
 
   return (
@@ -41,26 +49,34 @@ export const Relays: () => JSX.Element = () => {
         okText={t('relays.reload')}
         onCancel={handleCancel}
       >
-        <Steps
-          progressDot
-          current={relayUrls.length - 1}
-          direction='vertical'
-          items={[...relayUrls, ...newRelays].map((relay) => {
-            return {
-              title: relay,
-            }
-          })}
-        />
-        <Input.Group compact>
-          <Input
-            style={{ width: 'calc(100% - 135px)' }}
-            value={inputRelay}
-            onChange={(event) => setInputRelay(event.target.value)}
-          />
-          <Button type='primary' onClick={handleaddRelay}>
-            {t('relays.addRelay')}
-          </Button>
-        </Input.Group>
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <List
+              bordered
+              dataSource={newRelays}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta title={item} />
+                  <Button type='primary' danger onClick={() => handleDeleteRelay(item)}>
+                    {t('relays.delete')}
+                  </Button>
+                </List.Item>
+              )}
+            />
+          </Col>
+          <Col span={24}>
+            <Input.Group compact>
+              <Input
+                style={{ width: 'calc(100% - 135px)' }}
+                value={inputRelay}
+                onChange={(event) => setInputRelay(event.target.value)}
+              />
+              <Button type='primary' onClick={handleAddRelay}>
+                {t('relays.addRelay')}
+              </Button>
+            </Input.Group>
+          </Col>
+        </Row>
       </Modal>
     </>
   )
