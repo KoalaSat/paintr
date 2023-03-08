@@ -15,6 +15,7 @@
     "copyInvoice": "Copy"
   },
   "login": {
+    "extension": "Extension",
     "warning": "Desktop only, mobile version coming soon.",
     "login": "Login",
     "secretKey": "Secret key",

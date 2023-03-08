@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet-async'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { GlobalStyle } from 'styles/global-styles'
+import { Event } from 'nostr-tools'
 
 import { HomePage } from './pages/HomePage/Loadable'
 import { NotFoundPage } from './components/NotFoundPage/Loadable'
@@ -19,6 +20,16 @@ import RelayPoolProvider from './contexts/relayPoolContext'
 import PixelBoardProvider from './contexts/pixelBoardContext'
 import i18n from 'locales/i18n'
 import { ConfigProvider, theme } from 'antd'
+
+declare global {
+  interface Window {
+    nostr: {
+      enabled: boolean
+      getPublicKey: () => string
+      signEvent: (event: Event) => Promise<Event>
+    }
+  }
+}
 
 export const App: () => JSX.Element = () => {
   return (

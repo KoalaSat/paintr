@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next'
 
 export const Login: () => JSX.Element = () => {
   const { t } = useTranslation()
-  const { setPrivateKey, setPublicKey } = React.useContext(RelayPoolContext)
+  const { setPrivateKey, setPublicKey, setNip06, nip06Available } =
+    React.useContext(RelayPoolContext)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const [isModalRelaysOpen, setIsModalRelaysOpen] = useState<boolean>(false)
   const [nsec, setNsec] = useState<string>()
@@ -36,6 +37,12 @@ export const Login: () => JSX.Element = () => {
     setIsModalOpen(false)
   }
 
+  const extensionLogin: () => Promise<null | undefined> = async () => {
+    if (!nip06Available) return null
+    setPublicKey(await window.nostr.getPublicKey())
+    setNip06(true)
+  }
+
   return (
     <Modal
       title={t('login.login')}
@@ -46,6 +53,9 @@ export const Login: () => JSX.Element = () => {
       okText={t('login.okText')}
       maskClosable={false}
       width='80%'
+      style={{
+        maxWidth: 520,
+      }}
     >
       <Row gutter={[16, 16]}>
         <Col span={24}>
@@ -108,12 +118,19 @@ export const Login: () => JSX.Element = () => {
           <Input.Group compact>
             <Button>nsec</Button>
             <Input
-              style={{ width: 'calc(100% - 65px)' }}
+              style={{
+                width: nip06Available ? 'calc(100% - 165px)' : 'calc(100% - 65px)',
+              }}
               value={nsec}
               onChange={(event) => setNsec(event.target.value)}
               hidden
               placeholder={t('login.secretKey')}
             />
+            {nip06Available && (
+              <Button type='primary' onClick={extensionLogin}>
+                {t('login.extension')}
+              </Button>
+            )}
           </Input.Group>
         </Col>
       </Row>
