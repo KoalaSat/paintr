@@ -1,3 +1,4 @@
+import { GithubOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Input, Modal, notification, Row, Typography } from 'antd'
 import Title from 'antd/es/typography/Title'
 import { RelayPoolContext } from 'app/contexts/relayPoolContext'
@@ -56,23 +57,51 @@ export const Login: () => JSX.Element = () => {
             onOk={() => setIsModalRelaysOpen(false)}
             onCancel={() => setIsModalRelaysOpen(false)}
           >
-            <p>{t('login.faqRelaysDescription1')}</p>
-            <p>{t('login.faqRelaysDescription2')}</p>
+            <Typography.Text>{t('login.faqRelaysDescription1')}</Typography.Text>
+            <p />
+            <Typography.Text>{t('login.faqRelaysDescription2')}</Typography.Text>
+            <p />
             <Typography.Text strong>{t('login.faqRelaysDescription3')}</Typography.Text>
           </Modal>
           <Card title={t('login.title1')} bordered={false}>
-            <Typography.Text underline>{t('login.warning')}</Typography.Text>
-            <Title level={4}>{t('login.title2')}</Title>
-            <p>{t('login.description')}</p>
-            <Typography.Link onClick={() => setIsModalRelaysOpen(true)}>
-              {t('login.faqRelays')}
-            </Typography.Link>
-            <p>
-              {t('login.footer')}
-              <Typography.Link href='https://github.com/KoalaSat' target='_blank'>
-                KoalaSat
-              </Typography.Link>
-            </p>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Typography.Text underline>{t('login.warning')}</Typography.Text>
+              </Col>
+              <Col span={24}>
+                <Title level={4}>
+                  <img src='./logoWhite.png' style={{ width: 32, marginRight: 12 }} />
+                  {t('login.title2')}
+                </Title>
+              </Col>
+              <Col span={24}>{t('login.description')}</Col>
+              <Col span={24}>
+                <Typography.Link onClick={() => setIsModalRelaysOpen(true)}>
+                  {t('login.faqRelays')}
+                </Typography.Link>
+              </Col>
+              <Col span={24}>
+                <Row>
+                  <Col span={12}>
+                    {t('login.footer')}
+                    <Typography.Link href='https://github.com/KoalaSat' target='_blank'>
+                      KoalaSat
+                    </Typography.Link>
+                  </Col>
+                  <Col span={12}>
+                    <Row justify='end'>
+                      <Typography.Link
+                        href='https://github.com/KoalaSat/paintr'
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        <GithubOutlined />
+                      </Typography.Link>
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </Card>
         </Col>
         <Col span={24}>

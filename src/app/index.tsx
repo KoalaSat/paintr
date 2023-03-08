@@ -18,28 +18,42 @@ import { I18nextProvider } from 'react-i18next'
 import RelayPoolProvider from './contexts/relayPoolContext'
 import PixelBoardProvider from './contexts/pixelBoardContext'
 import i18n from 'locales/i18n'
+import { ConfigProvider, theme } from 'antd'
 
 export const App: () => JSX.Element = () => {
   return (
-    <RelayPoolProvider>
-      <PixelBoardProvider>
-        <BrowserRouter>
-          <Helmet
-            titleTemplate='%s - Paintr'
-            defaultTitle='Paintr'
-            htmlAttributes={{ lang: i18n.language }}
-          >
-            <meta name='description' content='Paintr' />
-          </Helmet>
-          <I18nextProvider i18n={i18n}>
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='*' element={<NotFoundPage />} />
-            </Routes>
-          </I18nextProvider>
-          <GlobalStyle />
-        </BrowserRouter>
-      </PixelBoardProvider>
-    </RelayPoolProvider>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.darkAlgorithm,
+        token: {
+          colorPrimary: '#4A1A6C',
+          colorSuccess: '#00b96b',
+          colorWarning: '#FEB95F',
+          colorError: '#F71735',
+          colorInfo: '#3772FF',
+        },
+      }}
+    >
+      <RelayPoolProvider>
+        <PixelBoardProvider>
+          <BrowserRouter>
+            <Helmet
+              titleTemplate='%s - Paintr'
+              defaultTitle='Paintr'
+              htmlAttributes={{ lang: i18n.language }}
+            >
+              <meta name='description' content='Paintr' />
+            </Helmet>
+            <I18nextProvider i18n={i18n}>
+              <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='*' element={<NotFoundPage />} />
+              </Routes>
+            </I18nextProvider>
+            <GlobalStyle />
+          </BrowserRouter>
+        </PixelBoardProvider>
+      </RelayPoolProvider>
+    </ConfigProvider>
   )
 }

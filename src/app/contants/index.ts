@@ -4,7 +4,6 @@ export const fallbackRelays = [
   'wss://nostr.developer.li',
   'wss://nostr.oxtr.dev',
   'wss://nostr.swiss-enigma.ch',
-  'wss://relay.nostr.snblago.com',
   'wss://nos.lol',
   'wss://relay.austrich.net',
   'wss://nostr.cro.social',

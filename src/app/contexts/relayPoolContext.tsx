@@ -87,12 +87,11 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
   useEffect(() => mainSubscription(relayUrls), [privateKey, publicKey])
 
   const addRelays: (urls: string[]) => void = (urls) => {
-    subscription?.unsub()
     setLoading(true)
-    let newRelays = [...relayUrls, ...urls]
-    newRelays = newRelays.filter((item, index, array) => array.indexOf(item) === index)
-    setRelayUrls(newRelays)
-    mainSubscription(newRelays)
+    relayPool?.close(relayUrls)
+    setRelayUrls(urls)
+    localStorage.setItem('relays', JSON.stringify(urls))
+    mainSubscription(urls)
   }
 
   const addMetadata: (metadata: Event) => void = (metadata) => {

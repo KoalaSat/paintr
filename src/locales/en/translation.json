@@ -3,6 +3,7 @@
     "place": "Place"
   },
   "relays": {
+    "delete": "Delete",
     "button": "Relays",
     "addRelay": "Add relay",
     "title": "Relays",
@@ -14,7 +15,7 @@
     "copyInvoice": "Copy"
   },
   "login": {
-    "warning": "Desktop only, mobile version cooming soon.",
+    "warning": "Desktop only, mobile version coming soon.",
     "login": "Login",
     "secretKey": "Secret key",
     "invalidNsec": "Invalid secret key",
