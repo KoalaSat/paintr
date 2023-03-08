@@ -1,5 +1,7 @@
 # Paintr
 
+A pixel whiteboard over nostr.
+
 <div align="center">
   <a href="https://github.com/KoalaSat/paintr/actions?query=workflow%3Abuild">
     <img src="https://github.com/KoalaSat/paintr/workflows/build/badge.svg" alt="Build Status" />
