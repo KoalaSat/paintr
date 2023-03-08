@@ -2,7 +2,7 @@
 // https://github.com/v0l/snort/blob/39fbe3b10f94b7542df01fb085e4f164aab15fca/src/Feed/VoidUpload.ts
 
 import { getUnixTime } from 'date-fns'
-import { Event, finishEvent } from 'nostr-tools'
+import { Event } from 'nostr-tools'
 import { requestInvoiceWithServiceParams, requestPayServiceParams } from 'lnurl-pay'
 import axios from 'axios'
 
@@ -10,7 +10,7 @@ export const lightningInvoice: (
   relays: string[],
   lud: string,
   tokens: number,
-  privateKey: string,
+  finishEvent: (event: Event) => Promise<Event | null>,
   publicKey: string,
   userId: string,
   comment?: string,
@@ -19,7 +19,7 @@ export const lightningInvoice: (
   relays,
   lud,
   tokens,
-  privateKey,
+  finishEvent,
   publicKey,
   userId,
   comment = '',
@@ -27,7 +27,7 @@ export const lightningInvoice: (
 ) => {
   let nostr: string
 
-  if (relays.length > 0 && privateKey && publicKey && userId) {
+  if (relays.length > 0 && finishEvent && publicKey && userId) {
     const tags = [
       ['p', userId],
       ['amount', (tokens * 1000).toString()],
@@ -44,7 +44,7 @@ export const lightningInvoice: (
       pubkey: publicKey,
       tags,
     }
-    const signedEvent = await finishEvent(event, privateKey)
+    const signedEvent = await finishEvent(event)
     nostr = JSON.stringify(signedEvent)
   }
 
