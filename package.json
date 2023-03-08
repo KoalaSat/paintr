@@ -95,7 +95,8 @@
     "safe-buffer": "5.2.1",
     "sanitize.css": "13.0.0",
     "styled-components": "5.3.5",
-    "web-vitals": "2.1.4"
+    "web-vitals": "2.1.4",
+    "webln": "0.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "17.1.2",

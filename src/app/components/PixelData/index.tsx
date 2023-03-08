@@ -2,6 +2,7 @@ import { CopyOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Col, Input, Modal, QRCode, Row, Tooltip, Typography } from 'antd'
 import { PixelBoardContext } from 'app/contexts/pixelBoardContext'
 import { RelayPoolContext } from 'app/contexts/relayPoolContext'
+import { getWebln } from 'app/Functions/Utils/Webln'
 import { lightningInvoice } from 'app/Functions/ZapInvoice'
 import { formatDistanceToNow, fromUnixTime } from 'date-fns'
 import { Kind, Event, nip19 } from 'nostr-tools'
@@ -10,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 
 export const PixelData: () => JSX.Element = () => {
   const { t } = useTranslation()
-  const { get, metadata, addMetadata, relayUrls, privateKey, publicKey } =
+  const { get, metadata, addMetadata, relayUrls, privateKey, publicKey, nip06, finishEvent } =
     React.useContext(RelayPoolContext)
   const { selectedPixel } = React.useContext(PixelBoardContext)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
@@ -51,6 +52,14 @@ export const PixelData: () => JSX.Element = () => {
     }
   }, [selectedPixel])
 
+  React.useEffect(() => {
+    if (invoice) {
+      getWebln().then((webln) => {
+        webln.sendPayment(invoice)
+      })
+    }
+  }, [invoice])
+
   const handleZap: () => void = () => {
     setOpenModal(true)
   }
@@ -69,12 +78,12 @@ export const PixelData: () => JSX.Element = () => {
   }
 
   const handleaZapRequest: () => void = async () => {
-    if (zapLud && privateKey && selectedPixel && meta) {
+    if (zapLud && selectedPixel && meta) {
       lightningInvoice(
         relayUrls,
         zapLud,
         zapAmount,
-        privateKey,
+        finishEvent,
         publicKey,
         meta?.pubkey,
         `pixel ${selectedPixel.x}:${selectedPixel.y}`,
@@ -129,7 +138,7 @@ export const PixelData: () => JSX.Element = () => {
                   <Button
                     type='primary'
                     onClick={handleZap}
-                    disabled={!privateKey || !zapLud || zapLud === ''}
+                    disabled={(!privateKey && !nip06) || !zapLud || zapLud === ''}
                   >
                     {t('pixelData.zap')}
                   </Button>

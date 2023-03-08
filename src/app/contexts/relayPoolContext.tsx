@@ -21,6 +21,7 @@ export interface RelayPoolContextType {
   setNip06: (nip06: boolean) => void
   get: (filter: Filter) => Promise<Event | null>
   subscription: Sub | null
+  finishEvent: (event: Event) => Promise<Event | null>
 }
 
 interface RelayPoolProviderProps {
@@ -42,6 +43,7 @@ const intialRelayPoolContext: RelayPoolContextType = {
   nip06Available: false,
   nip06: false,
   setNip06: () => {},
+  finishEvent: async () => null,
   get: async () => null,
   subscription: null,
 }
@@ -111,10 +113,23 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
     }
   }
 
+  const finishEvent: (event: Event) => Promise<Event | null> = async (event) => {
+    event.id = getEventHash(event)
+    if (nip06) {
+      event = await window.nostr.signEvent(event)
+      return event
+    } else if (privateKey) {
+      event.sig = signEvent(event, privateKey)
+      return event
+    } else {
+      return null
+    }
+  }
+
   const generateEvent: (content: string) => Promise<Event | null> = async (content) => {
     if (!publicKey || (!privateKey && !nip06)) return null
 
-    let event: Event = {
+    const event: Event = {
       kind: 30078,
       pubkey: publicKey,
       created_at: getUnixTime(new Date()),
@@ -124,14 +139,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
       sig: '',
     }
 
-    event.id = getEventHash(event)
-    if (nip06) {
-      event = await window.nostr.signEvent(event)
-    } else if (privateKey) {
-      event.sig = signEvent(event, privateKey)
-    }
-
-    return event
+    return await finishEvent(event)
   }
 
   const publish: (content: string) => void = async (content) => {
@@ -165,6 +173,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
         metadata,
         addMetadata,
         nip06Available,
+        finishEvent,
       }}
     >
       {children}
