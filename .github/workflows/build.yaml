@@ -6,14 +6,15 @@ on:
   - workflow_dispatch
 
 jobs:
-  createAndTestCRA:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js 16.x
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-      - name: Create CRA from downloaded template
-      - run: yarn run build
+          node-version: 18.x
+      - run: yarn install
       - run: yarn run lint
-      - run: yarn run cleanAndSetup
+      - run: yarn run build
