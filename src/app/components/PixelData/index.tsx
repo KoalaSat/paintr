@@ -31,6 +31,10 @@ export const PixelData: () => JSX.Element = () => {
       setNpub(nip19.npubEncode(selectedPixel.author))
       if (metadata[selectedPixel.author]) {
         setMeta(metadata[selectedPixel.author])
+        const content = JSON.parse(metadata[selectedPixel.author].content)
+        setUsername(content.name)
+        setPicture(content.picture)
+        setZapLud(content.lud06 && content.lud06 !== '' ? content.lud06 : content.lud16)
       } else if (selectedPixel.author && selectedPixel.author !== '') {
         get({
           kinds: [Kind.Metadata],
@@ -46,15 +50,6 @@ export const PixelData: () => JSX.Element = () => {
       }
     }
   }, [selectedPixel])
-
-  React.useEffect(() => {
-    if (meta) {
-      const content = JSON.parse(meta.content)
-      setUsername(content.name)
-      setPicture(content.picture)
-      setZapLud(content.lud06 && content.lud06 !== '' ? content.lud06 : content.lud16)
-    }
-  }, [meta])
 
   const handleZap: () => void = () => {
     setOpenModal(true)

@@ -10,7 +10,7 @@ import { Relays } from '../Relays'
 
 export const Commands: () => JSX.Element = () => {
   const { t } = useTranslation()
-  const { publish, publicKey, privateKey } = React.useContext(RelayPoolContext)
+  const { publish, publicKey, privateKey, nip06 } = React.useContext(RelayPoolContext)
   const { selectedPixel, authors } = React.useContext(PixelBoardContext)
   const [selectedColor, setSelectedColor] = React.useState<string>()
   const [countDownDate, setCountDownDate] = React.useState<number>()
@@ -79,7 +79,7 @@ export const Commands: () => JSX.Element = () => {
             value={selectedColor}
             optionType='button'
             buttonStyle='solid'
-            disabled={!privateKey}
+            disabled={!privateKey && !nip06}
           />
         </Row>
       </Col>
@@ -92,7 +92,9 @@ export const Commands: () => JSX.Element = () => {
             <Button
               type='primary'
               size='large'
-              disabled={!privateKey || !selectedPixel || !selectedColor || remaninigTime() > 0}
+              disabled={
+                (!privateKey && !nip06) || !selectedPixel || !selectedColor || remaninigTime() > 0
+              }
               onClick={onPlace}
             >
               {countDown > 0 ? `${t('commands.place')} (${countDown})` : t('commands.place')}

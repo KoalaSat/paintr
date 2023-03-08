@@ -16,6 +16,9 @@ export interface RelayPoolContextType {
   setPrivateKey: (privateKey: string) => void
   relayPool: SimplePool
   publish: (content: string) => void
+  nip06Available: boolean
+  nip06: boolean
+  setNip06: (nip06: boolean) => void
   get: (filter: Filter) => Promise<Event | null>
   subscription: Sub | null
 }
@@ -36,6 +39,9 @@ const intialRelayPoolContext: RelayPoolContextType = {
   setPrivateKey: () => {},
   relayPool: new SimplePool(),
   publish: () => {},
+  nip06Available: false,
+  nip06: false,
+  setNip06: () => {},
   get: async () => null,
   subscription: null,
 }
@@ -47,7 +53,9 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
   const [privateKey, setPrivateKey] = useState<string>()
   const [metadata, setMetadata] = useState<Record<string, Event>>({})
   const [relayUrls, setRelayUrls] = useState<string[]>([])
+  const [nip06, setNip06] = useState<boolean>(false)
   const [subscription, setSubscription] = useState<Sub | null>(null)
+  const nip06Available = useMemo<boolean>(() => window.nostr?.getPublicKey !== undefined, [])
   const relayPool = useMemo(() => {
     return new SimplePool()
   }, [])
@@ -72,7 +80,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
       const localRelays = JSON.parse(localRelaysJson)
       setRelayUrls(localRelays)
     } else {
-      const relays: string[] = []
+      const relays: string[] = ['wss://brb.io']
       while (relays.length < 5) {
         const randomRelayIndex = randomInt(0, fallbackRelays.length - 1)
         if (!relays.includes(fallbackRelays[randomRelayIndex])) {
@@ -103,10 +111,10 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
     }
   }
 
-  const generateEvent: (content: string) => Event | null = (content) => {
-    if (!publicKey || !privateKey) return null
+  const generateEvent: (content: string) => Promise<Event | null> = async (content) => {
+    if (!publicKey || (!privateKey && !nip06)) return null
 
-    const event: Event = {
+    let event: Event = {
       kind: 30078,
       pubkey: publicKey,
       created_at: getUnixTime(new Date()),
@@ -115,14 +123,19 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
       id: '',
       sig: '',
     }
+
     event.id = getEventHash(event)
-    event.sig = signEvent(event, privateKey)
+    if (nip06) {
+      event = await window.nostr.signEvent(event)
+    } else if (privateKey) {
+      event.sig = signEvent(event, privateKey)
+    }
 
     return event
   }
 
-  const publish: (content: string) => void = (content) => {
-    const event = generateEvent(content)
+  const publish: (content: string) => void = async (content) => {
+    const event = await generateEvent(content)
 
     if (event) {
       relayPool.publish(relayUrls, event)
@@ -136,6 +149,8 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
   return (
     <RelayPoolContext.Provider
       value={{
+        nip06,
+        setNip06,
         relayUrls,
         addRelays,
         loading,
@@ -149,6 +164,7 @@ const RelayPoolProvider: React.FC<RelayPoolProviderProps> = ({ children }) => {
         subscription,
         metadata,
         addMetadata,
+        nip06Available,
       }}
     >
       {children}
